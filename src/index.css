@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Great+Vibes&family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Alex+Brush&family=Pinyon+Script&family=Great+Vibes&family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -8,7 +8,7 @@
   --color-brand-blush: #FCF7F7;
 
   --font-serif: "Cormorant Garamond", serif;
-  --font-display: "Great Vibes", cursive;
+  --font-display: "Alex Brush", cursive;
   --font-names: "Cinzel Decorative", serif;
   --font-century: "Century", "Century Schoolbook", serif;
   --font-sans: "Inter", sans-serif;

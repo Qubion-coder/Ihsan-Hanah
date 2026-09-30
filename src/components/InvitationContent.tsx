@@ -1,12 +1,10 @@
 import { motion } from 'motion/react';
 import { Music, VolumeX, Heart } from 'lucide-react';
 import { Hero } from './Hero';
-import { CoupleDetails } from './CoupleDetails';
-import { CeremonyDetails } from './CeremonyDetails';
-import { Location } from './Location';
+import { CountdownAndVenue } from './CountdownAndVenue';
+import { LoveStory } from './LoveStory';
 import { Timeline } from './Timeline';
 
-import { Countdown } from './Countdown';
 import { RSVPForm } from './RSVPForm';
 import { BestWishes } from './BestWishes';
 
@@ -39,7 +37,13 @@ export function InvitationContent({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="font-sans text-stone-800 bg-brand-blush selection:bg-brand-plum/20"
+      className="font-sans text-stone-800 selection:bg-[#FAF9F6]/20"
+      style={{ 
+        backgroundImage: `url('/ChatGPT Image Sep 30, 2026, 07_49_45 PM.png')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
     >
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
@@ -57,65 +61,41 @@ export function InvitationContent({
 
       <Hero event={eventParam} inviteeName={fullInviteeName} />
 
+      <DeferredMount active={active} delay={80} minHeight="60vh">
+        <CountdownAndVenue targetDate={weddingDate} />
+      </DeferredMount>
+
       {fullInviteeName && (
-        <DeferredMount active={active} delay={80}>
+        <DeferredMount active={active} delay={120}>
           <InviteeBanner inviteeName={fullInviteeName} eventLabel={eventLabel} />
         </DeferredMount>
       )}
 
       <DeferredMount active={active} delay={120} minHeight="40vh">
-        <div className="py-24 sm:py-32 bg-gradient-to-b from-brand-blush via-white to-brand-blush relative overflow-hidden">
-
-          <CoupleDetails />
-        </div>
-      </DeferredMount>
-
-      <DeferredMount active={active} delay={180} minHeight="40vh">
-        <div className="py-24 sm:py-32 bg-white relative overflow-hidden">
-          <CeremonyDetails event={eventParam} />
-        </div>
-      </DeferredMount>
-
-      <DeferredMount active={active} delay={240} minHeight="40vh">
-        <div className="pt-24 pb-12 sm:py-32 bg-gradient-to-b from-white via-brand-rose/30 to-brand-blush relative overflow-hidden">
-          <Location event={eventParam} />
-        </div>
+        <LoveStory />
       </DeferredMount>
 
       <DeferredMount active={active} delay={300} minHeight="40vh">
         <Timeline />
       </DeferredMount>
 
-      <DeferredMount active={active} delay={360} minHeight="20vh">
-        <div className="py-24 sm:py-32 relative overflow-hidden bg-[#FDFBF7]">
-          <div className="relative z-10">
-            <Countdown targetDate={weddingDate} />
-          </div>
-        </div>
-      </DeferredMount>
-
       <DeferredMount active={active} delay={420} minHeight="30vh">
-        <div className="py-24 sm:py-32 bg-brand-blush relative overflow-hidden">
-          <RSVPForm inviteeName={fullInviteeName} eventName={eventLabel} eventParam={eventParam} />
-        </div>
+        <RSVPForm inviteeName={fullInviteeName} eventName={eventLabel} eventParam={eventParam} />
       </DeferredMount>
 
       <DeferredMount active={active} delay={480} minHeight="30vh">
-        <div className="py-24 sm:py-32 bg-[#FDFBF7] relative overflow-hidden">
-          <BestWishes />
-        </div>
+        <BestWishes />
       </DeferredMount>
 
       <DeferredMount active={active} delay={520}>
-        <footer className="py-12 bg-white border-t border-brand-lavender/20 text-center relative overflow-hidden mt-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-brand-lavender/10 blur-[80px] rounded-full pointer-events-none" />
-          <Heart className="w-6 h-6 mx-auto mb-6 text-brand-plum fill-brand-lavender/20" />
-          <p className="font-names text-4xl sm:text-5xl text-stone-800 mb-2">Avishka & Chanaka</p>
-          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.4em] font-sans text-stone-400 font-semibold block mb-4">
-            December 10, 2026
+        <footer className="py-12 bg-transparent text-center relative overflow-hidden mt-10">
+          <Heart className="w-6 h-6 mx-auto mb-6 text-[#3a2d27]" />
+          <p className="font-display text-4xl sm:text-5xl text-[#3a2d27] mb-2">Ihsan & Fathima Hanah</p>
+          <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.4em] font-sans text-[#5a4d46] font-semibold block mb-4">
+            October 09, 2026
           </span>
           
-          <div className="w-12 h-[1px] bg-brand-lavender/30 mx-auto my-6" />
+          <div className="w-12 h-[1px] bg-[#3a2d27]/30 mx-auto my-6" />
 
           <p className="text-[9px] sm:text-[10px] font-sans tracking-[0.2em] text-stone-400 uppercase">
             Want a beautiful wedding website like this? <br className="sm:hidden" />Create yours with{' '}

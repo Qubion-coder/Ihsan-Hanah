@@ -2,91 +2,112 @@ import React from 'react';
 import { motion } from 'motion/react';
 
 const events = [
-  { time: '10:15 AM', title: 'Poruwa Ceremony', desc: 'The Sacred Union', icon: '/timeline_poruwa.jpg' },
-  { time: '11:00 AM', title: 'Registration', desc: 'Signing the register', icon: '/timeline_registration.jpg' },
-  { time: '11:30 AM', title: 'Wedding Toast', desc: 'A toast to the couple', icon: '/timeline_toast.jpg' },
-  { time: '12:00 PM', title: 'Wedding Lunch', desc: 'Join us for a feast', icon: '/timeline_lunch.jpg' },
-  { time: '02:00 PM', title: 'Dancing Floor', desc: 'Let\'s celebrate!', icon: '/timeline_dancing.jpg' },
-  { time: '03:30 PM', title: 'Going Away', desc: 'The grand exit', icon: '/timeline_going_away.jpg' },
+  { time: '17:00', title: 'Guest Arrival', desc: 'Welcome & Seating' },
+  { time: '18:00', title: 'Wedding Feast', desc: 'Join us for dinner' },
+  { time: '20:00', title: 'Photographs', desc: 'Capturing memories' },
+  { time: '21:00', title: 'Going Away', desc: 'The grand exit' },
 ];
+
+const TextBlock = ({ event, isLeft }: { event: any, isLeft: boolean }) => (
+  <div className={`flex flex-col ${isLeft ? 'items-end text-right' : 'items-start text-left'} max-w-[220px]`}>
+    <h3 className="text-[#5a4d46] font-sans text-[8px] sm:text-[9px] tracking-[0.2em] uppercase font-medium leading-relaxed">
+      {event.title}
+    </h3>
+    <div className="text-[#3a2d27] font-display text-[2.75rem] sm:text-5xl my-1 sm:my-2 leading-none">
+      {event.time}
+    </div>
+    <p className="text-[#5a4d46] font-serif italic text-[11px] sm:text-xs leading-relaxed opacity-90">
+      {event.desc}
+    </p>
+  </div>
+);
 
 export const Timeline = () => {
   return (
-    <div className="bg-gradient-to-b from-[#FDF9F1] via-[#F9EFEF] to-[#FDF9F1] py-24 sm:py-32 relative overflow-hidden flex justify-center w-full">
-      {/* Bottom left corner flower */}
-      <img 
-        src="/ChatGPT Image Sep 3, 2026, 03_34_18 AM - Copy.png" 
-        alt="Floral Corner" 
-        className="absolute bottom-0 left-0 w-64 sm:w-96 opacity-80 mix-blend-multiply pointer-events-none z-0 translate-y-20 sm:translate-y-0" 
+    <div className="relative w-full flex flex-col items-center justify-center py-20 sm:py-32 px-4 overflow-hidden">
+      
+      {/* Decorative Lily - top right */}
+      <motion.img 
+        initial={{ opacity: 0, x: 40, y: -40 }}
+        whileInView={{ opacity: 1, x: 0, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        src="/Gemini_Generated_Image_ysl6ulysl6ulysl6-removebg-preview.png" 
+        alt="Lily decoration" 
+        className="absolute top-0 right-0 w-32 sm:w-48 mix-blend-multiply pointer-events-none drop-shadow-sm"
       />
 
-      <div className="w-full max-w-2xl mx-auto px-6 relative z-10 flex flex-col items-center">
-        
-        {/* Top middle flower */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-6 flex justify-center"
-        >
-          <img 
-            src="/ChatGPT Image Sep 3, 2026, 03_34_18 AM.png" 
-            alt="Floral Top" 
-            className="w-20 sm:w-24 h-auto opacity-80 mix-blend-multiply"
-          />
-        </motion.div>
+      {/* Header */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="text-center mb-10 sm:mb-16 flex flex-col items-center relative z-10"
+      >
+        <h2 className="font-display text-[4rem] sm:text-[5rem] text-[#3a2d27] mb-2 sm:mb-4 leading-none">
+          Wedding Day
+        </h2>
+        <span className="text-[#5a4d46] font-sans text-[9px] sm:text-[10px] tracking-[0.35em] font-medium uppercase mt-2">
+          October 09, 2026
+        </span>
+      </motion.div>
 
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-center mb-16 flex flex-col items-center"
-        >
-          <h2 className="text-4xl sm:text-5xl font-names text-[#5C3A41] tracking-wide mb-2">The Day</h2>
-        </motion.div>
+      {/* Timeline Container */}
+      <div className="relative w-full max-w-3xl mx-auto flex flex-col">
+        {events.map((event, idx) => {
+          const isLeft = idx % 2 === 0;
 
-        {/* Timeline */}
-        <div className="relative w-full max-w-md mx-auto">
-          {events.map((event, idx) => (
+          return (
             <motion.div 
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: idx * 0.1 }}
-              className="relative flex items-center mb-12 last:mb-0 group"
+              className="flex w-full h-[180px] sm:h-[220px] relative"
             >
-              {/* Time */}
-              <div className="w-20 sm:w-24 flex-shrink-0 text-right">
-                <span className="font-['Cormorant_Garamond',_serif] text-sm sm:text-base text-[#8A5A63] tracking-widest tabular-nums font-semibold">
-                  {event.time}
-                </span>
+              {/* Left Column */}
+              <div className="flex-1 flex justify-end items-center pr-3 sm:pr-6">
+                {isLeft && <TextBlock event={event} isLeft={true} />}
               </div>
 
-              {/* Dot and Line Container */}
-              <div className="flex flex-col items-center mx-4 sm:mx-6 relative h-full">
-                {/* Line to next item */}
-                {idx !== events.length - 1 && (
-                  <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[1px] h-[calc(100%+3rem)] bg-[#C07C88]/40 group-hover:bg-[#C07C88]/80 transition-colors duration-500" />
-                )}
-                {/* Icon Image */}
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white relative z-10 border border-[#C07C88]/40 shadow-[0_4px_15px_rgba(192,124,136,0.15)] flex items-center justify-center p-1 group-hover:border-[#C07C88] group-hover:scale-105 transition-all duration-300 overflow-hidden">
-                  <img src={event.icon} className="w-full h-full object-cover rounded-full mix-blend-multiply opacity-90" alt={event.title} />
-                </div>
+              {/* Center Wavy Line */}
+              <div className="w-16 sm:w-28 h-full relative flex-shrink-0">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0">
+                  {isLeft ? (
+                    <path 
+                      d="M 50 0 C 50 25, 15 30, 15 50 C 15 70, 50 75, 50 100" 
+                      stroke="#5a4d46" 
+                      strokeWidth="1" 
+                      fill="transparent" 
+                      vectorEffect="non-scaling-stroke"
+                      opacity="0.4"
+                    />
+                  ) : (
+                    <path 
+                      d="M 50 0 C 50 25, 85 30, 85 50 C 85 70, 50 75, 50 100" 
+                      stroke="#5a4d46" 
+                      strokeWidth="1" 
+                      fill="transparent" 
+                      vectorEffect="non-scaling-stroke"
+                      opacity="0.4"
+                    />
+                  )}
+                </svg>
+                {/* Dot */}
+                <div 
+                  className={`absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#5a4d46] ${isLeft ? 'left-[15%] -translate-x-1/2' : 'left-[85%] -translate-x-1/2'}`} 
+                />
               </div>
 
-              {/* Content */}
-              <div className="flex-1">
-                <h3 className="font-['Cormorant_Garamond',_serif] text-xl sm:text-2xl text-[#5C3A41] mb-1 font-medium">{event.title}</h3>
-                <p className="text-[11px] sm:text-xs text-[#8A5A63]/80 font-sans tracking-wide">{event.desc}</p>
+              {/* Right Column */}
+              <div className="flex-1 flex justify-start items-center pl-3 sm:pl-6">
+                {!isLeft && <TextBlock event={event} isLeft={false} />}
               </div>
             </motion.div>
-          ))}
-        </div>
-
+          );
+        })}
       </div>
     </div>
   );

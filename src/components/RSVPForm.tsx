@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle, Loader2, Heart, Sparkles } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface RSVPFormProps {
@@ -15,12 +15,12 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName 
 
   const [formData, setFormData] = useState({
     fullName: inviteeName,
+    email: '',
     attendance: 'yes',
     guests: guestsParam,
-    thoughts: '',
+    dietary: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  // const scriptUrl = "https://script.google.com/macros/s/AKfycbxyOLqbPCF84tUg299jIyA0GuebtYFra-3C-CXxzE851QIQkOs1RRrqBKyYqP6NCSO-/exec";
 
   useEffect(() => {
     if (inviteeName) {
@@ -33,175 +33,176 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName 
     setStatus('loading');
 
     try {
-
-      const payload = new FormData();
-      payload.append('sheet', 'RSVP');
-      payload.append('fullName', formData.fullName);
-      payload.append('attendance', formData.attendance);
-      payload.append('guests', formData.attendance === 'yes' ? formData.guests : '0'); 
-      payload.append('thoughts', formData.thoughts);
-      payload.append('dietaryNotes', formData.thoughts); // Fallback for old sheet column
-
-      // await fetch(scriptUrl, {
-      //   method: 'POST',
-      //   mode: 'no-cors',
-      //   body: payload,
-      // });
-
+      // Simulate network request
+      await new Promise(resolve => setTimeout(resolve, 1500));
       setStatus('success');
       toast.success('Your RSVP has been warmly received!');
-      setFormData({ fullName: inviteeName, attendance: 'yes', guests: guestsParam, thoughts: '' });
     } catch (error) {
-      console.error('Error sending RSVP: ', error);
       setStatus('error');
       toast.error('Could not submit RSVP. Please try again.');
     }
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 relative py-4 sm:py-6">
-      {/* Premium ambient backdrop & glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-brand-lavender/15 to-transparent rounded-full blur-[100px] pointer-events-none -z-10" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
+    <div className="w-full flex flex-col items-center justify-center py-24 sm:py-32 px-6">
+      
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="glass p-6 sm:p-10 lg:p-12 rounded-[2.5rem] sm:rounded-[3rem] border border-white/40 shadow-[0_30px_60px_rgba(176,137,104,0.1)] relative overflow-hidden bg-white/60 backdrop-blur-3xl lg:flex items-center gap-10 lg:gap-16"
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-lg mx-auto flex flex-col items-center"
       >
-        {/* Soft top border line */}
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-rose via-brand-plum/80 to-brand-rose" />
-
-        {/* Left Side: Elegant Text */}
-        <div className="lg:w-1/2 lg:pr-6 mb-8 lg:mb-0 relative text-center lg:text-left">
-          <Sparkles className="absolute -top-6 -left-6 w-12 h-12 text-brand-lavender/30 animate-pulse" />
-
-          <div className="inline-flex items-center justify-center lg:justify-start gap-4 mb-4">
-            <span className="text-brand-plum uppercase tracking-[0.5em] text-[10px] sm:text-[11px] font-bold drop-shadow-sm">
-              Kindly Respond
-            </span>
-            <div className="hidden lg:block w-16 h-[1px] bg-gradient-to-r from-brand-plum/60 to-transparent" />
-          </div>
-
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display text-stone-800 tracking-tight leading-[1.1] mb-4 drop-shadow-sm">
-            Reserve <span className="italic font-light text-brand-plum">Your</span> Seat
-          </h2>
-
-          <p className="text-stone-500/90 font-serif text-base sm:text-lg leading-relaxed mb-6">
-            {inviteeName
-              ? `Dear ${inviteeName}, your presence at ${eventName} means the world to us. Please kindly let us know if you will be able to join our celebration.`
-              : `Your presence means the world to us. Please kindly let us know if you will be able to join our celebration.`
-            }
-          </p>
-
-          <div className="w-12 h-[1px] bg-brand-lavender/50 mx-auto lg:mx-0" />
+        {/* Swans Scroll Animation */}
+        <div className="w-48 sm:w-64 h-24 sm:h-32 mb-8 relative flex items-center justify-center">
+          <motion.img 
+            initial={{ opacity: 0, x: -80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+            src="/Gemini_Generated_Image_t3ilvlt3ilvlt3il-removebg-preview.png" 
+            alt="Left Swan" 
+            className="w-1/2 h-full object-contain mix-blend-multiply" 
+          />
+          <motion.img 
+            initial={{ opacity: 0, x: 80 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1] }}
+            src="/Gemini_Generated_Image_t3ilvlt3ilvlt3il-removebg-preview - Copy.png" 
+            alt="Right Swan" 
+            className="w-1/2 h-full object-contain mix-blend-multiply" 
+          />
         </div>
 
-        {/* Right Side: Flowing Form */}
-        <div className="lg:w-1/2 relative z-10">
-          <AnimatePresence mode="wait">
-            {status === 'success' ? (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="text-center py-16 px-8 bg-white/70 rounded-[2rem] border border-white shadow-xl"
-              >
-                <div className="w-24 h-24 bg-green-50/80 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner border border-green-100">
-                  <CheckCircle className="w-12 h-12 text-green-500" />
-                </div>
-                <h3 className="text-4xl font-display text-stone-800 mb-4 tracking-tight drop-shadow-sm">With Gratitude</h3>
-                <p className="text-stone-500/90 leading-relaxed font-serif text-lg mb-8">
-                  Your response has been warmly received. We cannot wait to celebrate with you!
-                </p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="px-6 py-2 rounded-full border border-brand-lavender/30 text-brand-plum font-sans text-[10px] tracking-[0.2em] uppercase hover:bg-brand-lavender/10 transition-all duration-300 shadow-sm"
-                >
-                  Update Response
-                </button>
-              </motion.div>
-            ) : (
-              <motion.form
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit}
-                className="space-y-4 sm:space-y-5 bg-white/40 p-6 sm:p-8 rounded-[2rem] border border-white shadow-[0_15px_30px_rgba(0,0,0,0.05)]"
-              >
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 mb-2 ml-2">Full Name</label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="E.g., John & Jane Doe"
-                    className="w-full bg-white/80 px-6 py-3 rounded-full border border-stone-200/60 focus:ring-2 focus:ring-brand-lavender/30 focus:border-brand-plum/40 outline-none transition-all duration-300 font-serif italic text-base shadow-inner placeholder:text-stone-300"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  />
-                </div>
+        <h2 className="font-display text-[4rem] sm:text-[5rem] text-[#3a2d27] mb-2 leading-[0.9] text-center">
+          Confirm your<br />presence
+        </h2>
 
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 mb-2 ml-2">Reserved Seats</label>
+        <span className="text-[#5a4d46] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] font-medium uppercase mt-8 mb-16 sm:mb-24 text-center">
+          Kindly respond by September 25, 2026
+        </span>
+
+        <AnimatePresence mode="wait">
+          {status === 'success' ? (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="text-center py-16"
+            >
+              <h3 className="text-4xl font-display text-[#3a2d27] mb-4">With Gratitude</h3>
+              <p className="text-[#5a4d46] font-serif italic text-lg mb-8">
+                Your response has been warmly received. We cannot wait to celebrate with you!
+              </p>
+              <button
+                onClick={() => setStatus('idle')}
+                className="text-[#3a2d27] font-sans text-[10px] tracking-[0.2em] uppercase border-b border-[#3a2d27] pb-1 hover:opacity-70 transition-opacity"
+              >
+                Update Response
+              </button>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col gap-10"
+            >
+              {/* Full Name */}
+              <div className="flex flex-col gap-3">
+                <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Full Name</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="Your name"
+                  className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                />
+              </div>
+
+              {/* Email */}
+              <div className="flex flex-col gap-3">
+                <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Email</label>
+                <input
+                  required
+                  type="email"
+                  placeholder="your.email@example.com"
+                  className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
+              </div>
+
+              {/* Attendance */}
+              <div className="flex flex-col gap-4">
+                <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Will you be attending?</label>
+                <div className="flex flex-col gap-3">
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="relative w-4 h-4 rounded-full border border-[#3a2d27]/40 flex items-center justify-center group-hover:border-[#3a2d27] transition-colors">
+                      {formData.attendance === 'yes' && <div className="w-2 h-2 rounded-full bg-[#3a2d27]" />}
+                    </div>
+                    <span className="text-[#3a2d27] font-serif text-base">Joyfully Accept</span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div className="relative w-4 h-4 rounded-full border border-[#3a2d27]/40 flex items-center justify-center group-hover:border-[#3a2d27] transition-colors">
+                      {formData.attendance === 'no' && <div className="w-2 h-2 rounded-full bg-[#3a2d27]" />}
+                    </div>
+                    <span className="text-[#3a2d27] font-serif text-base">Regretfully Decline</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Guests */}
+              {formData.attendance === 'yes' && (
+                <div className="flex flex-col gap-3">
+                  <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Number of Guests</label>
                   <input
                     type="number"
                     min="1"
-                    className="w-full bg-white/80 px-6 py-3 rounded-full border border-stone-200/60 focus:ring-2 focus:ring-brand-lavender/30 focus:border-brand-plum/40 outline-none transition-all duration-300 font-serif italic text-base shadow-inner placeholder:text-stone-300"
+                    className="w-16 bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors"
                     value={formData.guests}
                     onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
                   />
-                  <p className="text-[9px] text-stone-400 mt-1.5 ml-3 italic">Number of seats you will be taking</p>
                 </div>
+              )}
 
-                <div>
-                  <label className="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-500 mb-2 ml-2">Attendance</label>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setFormData({ ...formData, attendance: 'yes' })}
-                      className={`flex-1 py-3 rounded-full border transition-all duration-300 font-serif italic text-base shadow-sm flex items-center justify-center gap-2 ${formData.attendance === 'yes'
-                          ? 'bg-brand-lavender/30 border-brand-plum/50 text-brand-plum font-medium'
-                          : 'bg-white/80 border-stone-200/60 text-stone-400 hover:border-brand-lavender/50 hover:text-stone-500'
-                        }`}
-                    >
-                      {formData.attendance === 'yes' && <Heart className="w-4 h-4 fill-brand-plum/30" />}
-                      Yes, I'll be there
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({ ...formData, attendance: 'no' })}
-                      className={`flex-1 py-3 rounded-full border transition-all duration-300 font-serif italic text-base shadow-sm ${formData.attendance === 'no'
-                          ? 'bg-stone-100 border-stone-300 text-stone-600 font-medium'
-                          : 'bg-white/80 border-stone-200/60 text-stone-400 hover:border-stone-300 hover:text-stone-500'
-                        }`}
-                    >
-                      Can't make it
-                    </button>
-                  </div>
+              {/* Dietary */}
+              {formData.attendance === 'yes' && (
+                <div className="flex flex-col gap-3">
+                  <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Dietary Restrictions</label>
+                  <input
+                    type="text"
+                    placeholder="Let us know if you have any dietary requirements..."
+                    className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic"
+                    value={formData.dietary}
+                    onChange={(e) => setFormData({ ...formData, dietary: e.target.value })}
+                  />
                 </div>
+              )}
 
+              {/* Submit Button */}
+              <div className="pt-8 flex justify-center">
+                <button
+                  disabled={status === 'loading'}
+                  type="submit"
+                  className="px-12 py-4 bg-transparent border border-[#3a2d27]/30 rounded-full text-[#3a2d27] font-sans tracking-[0.3em] text-[10px] uppercase hover:bg-[#3a2d27] hover:text-[#FAF9F6] transition-all duration-500 flex items-center justify-center gap-3 disabled:opacity-50"
+                >
+                  {status === 'loading' ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'Send RSVP'
+                  )}
+                </button>
+              </div>
+            </motion.form>
+          )}
+        </AnimatePresence>
 
-
-                <div className="pt-2">
-                  <button
-                    disabled={status === 'loading'}
-                    type="submit"
-                    className="w-full bg-stone-800 text-brand-rose py-5 rounded-full font-sans tracking-[0.3em] font-bold text-[11px] uppercase hover:bg-stone-900 transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.25)] active:scale-[0.98] flex items-center justify-center gap-3 disabled:opacity-70"
-                  >
-                    {status === 'loading' ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      'Confirm Attendance'
-                    )}
-                  </button>
-                </div>
-              </motion.form>
-            )}
-          </AnimatePresence>
-        </div>
       </motion.div>
     </div>
   );

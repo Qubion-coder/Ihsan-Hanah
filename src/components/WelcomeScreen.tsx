@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { motion } from 'motion/react';
 
 interface WelcomeScreenProps {
   onComplete: () => void;
@@ -8,7 +9,6 @@ interface WelcomeScreenProps {
 
 export function WelcomeScreen({ onComplete, onMusicStart, readyToTransition = true }: WelcomeScreenProps) {
   const [started, setStarted] = useState(false);
-  const [videoEnded, setVideoEnded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const startEntry = () => {
@@ -25,33 +25,17 @@ export function WelcomeScreen({ onComplete, onMusicStart, readyToTransition = tr
   };
 
   const handleVideoEnd = () => {
-    setVideoEnded(true);
-    setTimeout(() => onComplete(), 500); // Wait for fade out
+    onComplete();
   };
 
   return (
     <>
       <style>{`
-        .welcome-scene {
-          position: fixed;
-          inset: 0;
-          z-index: 100;
-          background: #000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: opacity 0.5s ease;
-        }
-        .welcome-scene.is-exiting {
-          opacity: 0;
-          pointer-events: none;
-        }
         .video-container {
           position: absolute;
           inset: 0;
           width: 100%;
           height: 100%;
-          opacity: 1;
           pointer-events: auto;
           background: #000;
           cursor: pointer;
@@ -62,8 +46,12 @@ export function WelcomeScreen({ onComplete, onMusicStart, readyToTransition = tr
           object-fit: cover;
         }
       `}</style>
-      <div className={`welcome-scene ${videoEnded ? 'is-exiting' : ''}`}>
-        
+      <motion.div 
+        className="fixed inset-0 z-[100] bg-black flex items-center justify-center"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+      >
         <div className="video-container" onClick={startEntry}>
           <video 
             ref={videoRef}
@@ -73,7 +61,7 @@ export function WelcomeScreen({ onComplete, onMusicStart, readyToTransition = tr
             onEnded={handleVideoEnd}
           />
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

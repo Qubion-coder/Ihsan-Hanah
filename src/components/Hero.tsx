@@ -43,39 +43,33 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
 
   return (
     <div ref={containerRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[#fdfaf7]">
-      <motion.div
-        className="absolute inset-0 z-0 origin-center"
-        style={useParallax ? { y: y1, scale } : undefined}
-      >
+      <div className="absolute inset-0 z-0">
         <img
-          src="/ChatGPT Image Jul 5, 2026h, 02_20_06 AM.png"
+          src="/ChatGPT Image Sep 30, 2026, 06_01_34 PM.png"
           alt="Hero Background"
-          className="w-full h-full object-cover opacity-90"
+          className="w-full h-full object-cover"
           style={{ objectPosition: 'center' }}
         />
-      </motion.div>
+      </div>
 
-      <div className="relative z-10 flex flex-col items-center w-full px-4 sm:px-6 mt-4 sm:mt-0">
+      <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 sm:px-6 h-full mt-[-5%] sm:mt-[-2%]">
         
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="flex items-center justify-center w-full gap-4 mb-6 sm:mb-8"
-        >
-          <div className="w-16 sm:w-24 h-[1px] bg-[#C5A059]/60" />
-          <Heart className="w-4 h-4 text-[#C5A059] fill-[#C5A059]/40" />
-          <div className="w-16 sm:w-24 h-[1px] bg-[#C5A059]/60" />
-        </motion.div>
-
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="bg-gradient-to-r from-[#fceef0]/90 via-[#ffffff]/90 to-[#fceef0]/90 backdrop-blur-md border border-[#C5A059]/20 px-8 sm:px-12 py-3.5 sm:py-4 rounded-full mb-10 sm:mb-14 shadow-sm"
+          className="flex flex-col items-center gap-1.5 mb-10 sm:mb-12 text-center"
         >
-          <span className="text-[#3a3a3a] font-sans text-[10px] sm:text-[11px] tracking-[0.4em] font-bold uppercase drop-shadow-sm">
-            The Celebration of Love
+          {inviteeName && (
+            <span className="text-[#4a3d36] font-serif italic text-lg sm:text-xl mb-4">
+              Dear {inviteeName},
+            </span>
+          )}
+          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
+            Joyfully invite you
+          </span>
+          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
+            to their wedding
           </span>
         </motion.div>
 
@@ -83,30 +77,25 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
-          className="flex flex-col items-center gap-1 sm:gap-2 mb-10 sm:mb-16"
+          className="flex flex-col items-center gap-2 sm:gap-4 text-center"
         >
-          <h1 className="text-[3.5rem] sm:text-7xl font-names text-[#C5A059] tracking-widest drop-shadow-sm leading-none">
-            AVISHKA
+          <h1 className="text-[4.5rem] sm:text-[6.5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal">
+            Ihsan
           </h1>
-          <span className="text-4xl sm:text-5xl font-display text-[#C5A059] drop-shadow-sm my-1">
+          <span className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-2 mb-4">
+            Son of Mr & Mrs. S. L. Subair
+          </span>
+          
+          <span className="text-3xl sm:text-5xl font-display text-[#3a2d27] drop-shadow-sm my-2 font-normal">
             &
           </span>
-          <h1 className="text-[3.5rem] sm:text-7xl font-names text-[#C5A059] tracking-widest drop-shadow-sm leading-none">
-            CHANAKA
+          
+          <h1 className="text-[4.5rem] sm:text-[6.5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal mt-4">
+            Fathima Hanah
           </h1>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="bg-white/90 backdrop-blur-md border border-[#C5A059]/15 px-6 sm:px-16 py-8 sm:py-10 rounded-[2.5rem] shadow-[0_8px_30px_rgba(197,160,89,0.12)] max-w-[90%] sm:max-w-xl text-center"
-        >
-          <p className="text-stone-700 font-serif italic text-[1.1rem] sm:text-[1.35rem] leading-relaxed">
-            {inviteeName && <span className="font-semibold block mb-2 text-stone-800">Dear {inviteeName},</span>}
-            Together with our families, we<br/>
-            cordially invite you to join us
-          </p>
+          <span className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-2">
+            Daughter of Mr & Mrs. M. B. M. Muzammil
+          </span>
         </motion.div>
 
       </div>
@@ -123,6 +112,29 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
         >
           Discover
         </button>
+      </motion.div>
+
+      {/* Swaying Lilies Bottom Right */}
+      <motion.div
+        initial={{ opacity: 0, y: 150 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+        className="absolute bottom-[-10px] right-[-20px] sm:bottom-[-20px] sm:right-[-20px] z-20 pointer-events-none"
+      >
+        <motion.img
+          animate={{ 
+            rotate: [0, -2, 1.5, -1, 0],
+            y: [0, -3, 0, -2, 0]
+          }}
+          transition={{ 
+            repeat: Infinity, 
+            duration: 6, 
+            ease: "easeInOut" 
+          }}
+          src="/Gemini_Generated_Image_lutajhlutajhluta-removebg-preview.png"
+          alt="Lilies"
+          className="w-48 sm:w-72 h-auto origin-bottom-right drop-shadow-md mix-blend-multiply"
+        />
       </motion.div>
     </div>
   );

@@ -24,7 +24,7 @@ export default function App() {
 
   let eventLabel = 'Our Wedding Celebration';
 
-  const weddingDate = new Date('2026-12-10T16:00:00');
+  const weddingDate = new Date('2026-10-09T17:00:00');
 
   useEffect(() => {
     if (isAdminRoute()) return;
@@ -49,7 +49,7 @@ export default function App() {
 
   const ensureAudio = useCallback(() => {
     if (!audioRef.current) {
-      audioRef.current = new Audio('/Jayamangaala Gaatha (1).mp3');
+      audioRef.current = new Audio('/Saiyaara (Reprise - Female Version) Lyrics - Shreya Ghoshal, Faheem Abdullah.mp3');
       audioRef.current.loop = true;
       audioRef.current.volume = 0.3;
       audioRef.current.preload = 'none';

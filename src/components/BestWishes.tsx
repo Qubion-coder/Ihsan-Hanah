@@ -1,104 +1,125 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Heart, Send, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Loader2 } from 'lucide-react';
 
 export const BestWishes = () => {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !message.trim()) return;
     
-    // Construct WhatsApp message (optional, but requested by standard workflow for wishes/rsvp)
+    setLoading(true);
+    
+    // Simulate network/transition
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    // Construct WhatsApp message
     const waMessage = `*Best Wishes for Chanaka & Avishka* ❤️\n\n*From:* ${name}\n\n*Message:*\n${message}`;
     const encodedMessage = encodeURIComponent(waMessage);
     const waUrl = `https://wa.me/94707819074?text=${encodedMessage}`;
     
     window.open(waUrl, '_blank');
     setSubmitted(true);
+    setLoading(false);
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-brand-lavender/20 to-transparent rounded-full blur-[100px] pointer-events-none" />
+    <div className="w-full flex flex-col items-center justify-center py-24 sm:py-32 px-6">
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="text-center mb-12 sm:mb-16 relative z-10"
+        transition={{ duration: 0.8 }}
+        className="w-full max-w-lg mx-auto flex flex-col items-center"
       >
-        <div className="inline-flex items-center gap-3 mb-4">
-          <Sparkles className="w-4 h-4 text-brand-plum animate-pulse" />
-          <span className="text-brand-plum uppercase tracking-[0.4em] sm:tracking-[0.5em] text-[10px] sm:text-xs font-bold drop-shadow-sm">
-            Guestbook
-          </span>
-          <Sparkles className="w-4 h-4 text-brand-plum animate-pulse" />
-        </div>
-        
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-names text-stone-800 mb-6 drop-shadow-sm">
-          Best <span className="italic font-light text-brand-plum">Wishes</span>
+        <h2 className="font-display text-[4rem] sm:text-[5rem] text-[#3a2d27] mb-2 leading-[0.9] text-center">
+          Best Wishes
         </h2>
-        <p className="text-stone-500/90 font-serif text-lg max-w-xl mx-auto">
-          Leave a message for the couple as they embark on this beautiful journey together.
-        </p>
-      </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.2 }}
-        className="bg-white/80 backdrop-blur-2xl p-8 sm:p-12 rounded-[2.5rem] border border-brand-lavender/30 shadow-[0_20px_50px_rgba(176,137,104,0.1)] relative z-10"
-      >
-        {submitted ? (
-          <div className="text-center py-12">
-            <Heart className="w-16 h-16 text-brand-plum mx-auto mb-6 fill-brand-plum/20 animate-pulse" />
-            <h3 className="text-2xl font-serif text-stone-800 mb-4">Thank you for your wishes!</h3>
-            <p className="text-stone-500 font-sans text-sm">Your message means the world to us.</p>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-xs uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 pl-2">
-                Your Name
-              </label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name"
-                className="w-full bg-[#fcfaf7] px-6 py-4 rounded-full border border-stone-200 focus:ring-2 focus:ring-brand-lavender/50 focus:border-brand-plum/50 outline-none transition-all font-serif text-lg text-stone-800 placeholder:text-stone-400"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-xs uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 pl-2">
-                Your Message
-              </label>
-              <textarea
-                required
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Write your wishes for the couple..."
-                rows={4}
-                className="w-full bg-[#fcfaf7] px-6 py-4 rounded-[2rem] border border-stone-200 focus:ring-2 focus:ring-brand-lavender/50 focus:border-brand-plum/50 outline-none transition-all font-serif text-lg text-stone-800 placeholder:text-stone-400 resize-none"
-              />
-            </div>
-            
-            <button
-              type="submit"
-              className="w-full bg-stone-800 text-brand-rose py-4 sm:py-5 rounded-full font-sans tracking-[0.3em] font-bold text-[10px] sm:text-xs uppercase hover:bg-stone-900 transition-all shadow-lg hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-3 mt-4 group"
+        <span className="text-[#5a4d46] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] font-medium uppercase mt-6 mb-16 sm:mb-24 text-center">
+          Leave a message for the couple
+        </span>
+
+        <AnimatePresence mode="wait">
+          {submitted ? (
+            <motion.div
+              key="success"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="text-center py-16"
             >
-              Send Wishes
-              <Send className="w-4 h-4 text-brand-plum group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
-        )}
+              <h3 className="text-4xl font-display text-[#3a2d27] mb-4">Thank You</h3>
+              <p className="text-[#5a4d46] font-serif italic text-lg mb-8">
+                Your wishes mean the world to us.
+              </p>
+              <button
+                onClick={() => {
+                  setSubmitted(false);
+                  setMessage('');
+                }}
+                className="text-[#3a2d27] font-sans text-[10px] tracking-[0.2em] uppercase border-b border-[#3a2d27] pb-1 hover:opacity-70 transition-opacity"
+              >
+                Send Another Message
+              </button>
+            </motion.div>
+          ) : (
+            <motion.form
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onSubmit={handleSubmit}
+              className="w-full flex flex-col gap-10"
+            >
+              {/* Name */}
+              <div className="flex flex-col gap-3">
+                <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Your Name</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="E.g., John & Jane Doe"
+                  className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              
+              {/* Message */}
+              <div className="flex flex-col gap-3">
+                <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Your Message</label>
+                <textarea
+                  required
+                  placeholder="Write your wishes for the couple..."
+                  rows={3}
+                  className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic resize-none"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </div>
+              
+              {/* Submit Button */}
+              <div className="pt-8 flex justify-center">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="px-12 py-4 bg-transparent border border-[#3a2d27]/30 rounded-full text-[#3a2d27] font-sans tracking-[0.3em] text-[10px] uppercase hover:bg-[#3a2d27] hover:text-[#FAF9F6] transition-all duration-500 flex items-center justify-center gap-3 disabled:opacity-50"
+                >
+                  {loading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    'Send Wishes'
+                  )}
+                </button>
+              </div>
+            </motion.form>
+          )}
+        </AnimatePresence>
       </motion.div>
     </div>
   );
