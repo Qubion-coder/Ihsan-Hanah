@@ -105,8 +105,9 @@ export const CountdownAndVenue: React.FC<CountdownAndVenueProps> = ({ targetDate
           The Venue
         </span>
 
-
-
+        <h2 className="font-display text-[2.75rem] sm:text-5xl text-[#3a2d27] mb-8 leading-none mt-2">
+          Bride's Residence
+        </h2>
         {/* Separator */}
         <div className="flex items-center justify-center gap-3 mb-8 w-full">
           <div className="w-12 h-[1px] bg-[#5a4d46]/30"></div>
