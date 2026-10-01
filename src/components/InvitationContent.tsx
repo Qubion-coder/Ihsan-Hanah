@@ -19,6 +19,7 @@ interface InvitationContentProps {
   weddingDate: Date;
   isMusicPlaying: boolean;
   onToggleMusic: () => void;
+  isWaleema?: boolean;
 }
 
 export function InvitationContent({
@@ -29,6 +30,7 @@ export function InvitationContent({
   weddingDate,
   isMusicPlaying,
   onToggleMusic,
+  isWaleema = false,
 }: InvitationContentProps) {
   if (!active) return null;
 
@@ -68,7 +70,7 @@ export function InvitationContent({
       )}
 
       <DeferredMount active={active} delay={80} minHeight="60vh">
-        <CountdownAndVenue targetDate={weddingDate} />
+        <CountdownAndVenue targetDate={weddingDate} isWaleema={isWaleema} />
       </DeferredMount>
 
 
@@ -80,11 +82,11 @@ export function InvitationContent({
 
 
       <DeferredMount active={active} delay={420} minHeight="30vh">
-        <RSVPForm inviteeName={fullInviteeName} eventName={eventLabel} eventParam={eventParam} />
+        <RSVPForm inviteeName={fullInviteeName} eventName={eventLabel} eventParam={eventParam} isWaleema={isWaleema} />
       </DeferredMount>
 
       <DeferredMount active={active} delay={480} minHeight="30vh">
-        <BestWishes />
+        <BestWishes inviteeName={fullInviteeName} isWaleema={isWaleema} />
       </DeferredMount>
 
       <DeferredMount active={active} delay={520}>

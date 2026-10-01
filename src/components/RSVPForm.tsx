@@ -7,15 +7,15 @@ interface RSVPFormProps {
   inviteeName?: string;
   eventName?: string;
   eventParam?: string;
+  isWaleema?: boolean;
 }
 
-export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName = 'the celebration', eventParam = 'both' }) => {
+export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName = 'the celebration', eventParam = 'both', isWaleema = false }) => {
   const searchParams = new URLSearchParams(window.location.search);
   const guestsParam = searchParams.get('guests') || '1';
 
   const [formData, setFormData] = useState({
     fullName: inviteeName,
-    email: '',
     attendance: 'yes',
     guests: guestsParam,
     dietary: '',
@@ -33,11 +33,33 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName 
     setStatus('loading');
 
     try {
-      // Simulate network request
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbxu_hFbfsUMTcKZjqL0agaq8WkHGVjk7VW5UROJXD1JyawjWdDSmeh7oHfwTAmyiMo/exec';
+      
+      if (scriptUrl !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: JSON.stringify({
+            type: 'rsvp',
+            fullName: formData.fullName,
+            attendance: formData.attendance,
+            guests: formData.guests,
+            dietary: formData.dietary,
+            eventType: isWaleema ? 'Waleema' : 'Wedding',
+          })
+        });
+      } else {
+        // Fallback simulate network request if URL is not set
+        await new Promise(resolve => setTimeout(resolve, 1500));
+      }
+      
       setStatus('success');
       toast.success('Your RSVP has been warmly received!');
     } catch (error) {
+      console.error('RSVP Error:', error);
       setStatus('error');
       toast.error('Could not submit RSVP. Please try again.');
     }
@@ -122,19 +144,6 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName 
                   className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                />
-              </div>
-
-              {/* Email */}
-              <div className="flex flex-col gap-3">
-                <label className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-medium text-[#5a4d46]">Email</label>
-                <input
-                  required
-                  type="email"
-                  placeholder="your.email@example.com"
-                  className="w-full bg-transparent border-b border-[#3a2d27]/20 pb-3 text-[#3a2d27] font-serif text-base focus:outline-none focus:border-[#3a2d27] transition-colors placeholder:text-[#3a2d27]/40 placeholder:italic"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
 

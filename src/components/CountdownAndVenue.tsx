@@ -4,9 +4,10 @@ import { MapPin } from 'lucide-react';
 
 interface CountdownAndVenueProps {
   targetDate: Date;
+  isWaleema?: boolean;
 }
 
-export const CountdownAndVenue: React.FC<CountdownAndVenueProps> = ({ targetDate }) => {
+export const CountdownAndVenue: React.FC<CountdownAndVenueProps> = ({ targetDate, isWaleema = false }) => {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -106,7 +107,7 @@ export const CountdownAndVenue: React.FC<CountdownAndVenueProps> = ({ targetDate
         </span>
 
         <h2 className="font-display text-[2.75rem] sm:text-5xl text-[#3a2d27] mb-8 leading-none mt-2">
-          Bride's Residence
+          {isWaleema ? "Abdullah Grand Palace" : "Bride's Residence"}
         </h2>
         {/* Separator */}
         <div className="flex items-center justify-center gap-3 mb-8 w-full">
@@ -116,17 +117,20 @@ export const CountdownAndVenue: React.FC<CountdownAndVenueProps> = ({ targetDate
         </div>
 
         <span className="text-[#3a2d27] font-sans text-xs sm:text-sm tracking-[0.2em] uppercase mb-4 font-medium">
-          October 09, 2026
+          {isWaleema ? "October 11, 2026" : "October 09, 2026"}
         </span>
 
-        <p className="text-[#5a4d46] font-sans text-sm sm:text-base leading-relaxed mb-10">
-          Time : 5.00 p.m.
+        <p className="text-[#5a4d46] font-sans text-sm sm:text-base leading-relaxed mb-10 text-center">
+          {isWaleema ? "Time : 7.30 p.m. Dinner party" : "Time : 5.00 p.m."}
         </p>
 
         {/* Map Placeholder */}
         <div className="w-full max-w-sm sm:max-w-md h-48 sm:h-64 rounded-xl overflow-hidden shadow-lg border border-[#5a4d46]/10 relative mb-8">
           <iframe 
-            src="https://maps.google.com/maps?q=7.438750,81.817222&hl=en&z=17&output=embed" 
+            src={isWaleema 
+              ? "https://maps.google.com/maps?q=Abdullah+Grand+Palace&hl=en&z=15&output=embed"
+              : "https://maps.google.com/maps?q=7.438750,81.817222&hl=en&z=17&output=embed"
+            } 
             width="100%" 
             height="100%" 
             style={{ border: 0 }} 
@@ -139,7 +143,7 @@ export const CountdownAndVenue: React.FC<CountdownAndVenueProps> = ({ targetDate
 
         {/* Live Location Button */}
         <a 
-          href="https://maps.app.goo.gl/XbG731Rpihehw3KUA"
+          href={isWaleema ? "https://maps.app.goo.gl/3iWNHfyR6AD6BzgV7" : "https://maps.app.goo.gl/XbG731Rpihehw3KUA"}
           target="_blank"
           rel="noopener noreferrer"
           className="px-10 py-3.5 bg-transparent border border-[#3a2d27]/40 rounded-full text-[#3a2d27] font-sans tracking-[0.3em] text-[9px] sm:text-[10px] uppercase hover:bg-[#3a2d27] hover:text-[#FAF9F6] transition-all duration-500 flex items-center justify-center gap-3 shadow-sm hover:shadow-md"

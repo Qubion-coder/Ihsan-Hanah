@@ -21,8 +21,20 @@ export default function App() {
   const eventParam = params.get('event') || 'both';
 
   let fullInviteeName = '';
+  let isWaleema = false;
   const pathname = window.location.pathname;
-  if (pathname !== '/' && pathname !== '/admin') {
+
+  if (pathname.startsWith('/waleema')) {
+    isWaleema = true;
+    const namePart = pathname.replace('/waleema', '').replace(/^\//, '');
+    if (namePart) {
+      try {
+        fullInviteeName = decodeURIComponent(namePart);
+      } catch (e) {
+        fullInviteeName = namePart;
+      }
+    }
+  } else if (pathname !== '/' && pathname !== '/admin') {
     try {
       fullInviteeName = decodeURIComponent(pathname.slice(1));
     } catch (e) {
@@ -32,9 +44,9 @@ export default function App() {
     fullInviteeName = `${titleParam} ${nameParam}`.trim();
   }
 
-  let eventLabel = 'Our Wedding Celebration';
+  let eventLabel = isWaleema ? 'Our Waleema' : 'Our Wedding Celebration';
 
-  const weddingDate = new Date('2026-10-09T17:00:00');
+  const weddingDate = isWaleema ? new Date('2026-10-11T19:30:00') : new Date('2026-10-09T17:00:00');
 
   useEffect(() => {
     if (isAdminRoute()) return;
@@ -120,6 +132,7 @@ export default function App() {
         weddingDate={weddingDate}
         isMusicPlaying={isMusicPlaying}
         onToggleMusic={toggleMusic}
+        isWaleema={isWaleema}
       />
 
       <AnimatePresence mode="wait">

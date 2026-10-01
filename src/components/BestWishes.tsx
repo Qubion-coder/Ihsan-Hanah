@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Loader2 } from 'lucide-react';
 
-export const BestWishes = () => {
-  const [name, setName] = useState('');
+interface BestWishesProps {
+  inviteeName?: string;
+  isWaleema?: boolean;
+}
+
+export const BestWishes: React.FC<BestWishesProps> = ({ inviteeName = '', isWaleema = false }) => {
+  const [name, setName] = useState(inviteeName);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (inviteeName) {
+      setName(inviteeName);
+    }
+  }, [inviteeName]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,15 +25,31 @@ export const BestWishes = () => {
     
     setLoading(true);
     
-    // Simulate network/transition
-    await new Promise(resolve => setTimeout(resolve, 800));
+    try {
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbxu_hFbfsUMTcKZjqL0agaq8WkHGVjk7VW5UROJXD1JyawjWdDSmeh7oHfwTAmyiMo/exec';
+      
+      if (scriptUrl !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'text/plain',
+          },
+          body: JSON.stringify({
+            type: 'wish',
+            name: name,
+            message: message,
+            eventType: isWaleema ? 'Waleema' : 'Wedding',
+          })
+        });
+      } else {
+        // Fallback simulate network request
+        await new Promise(resolve => setTimeout(resolve, 800));
+      }
+    } catch (e) {
+      console.error('Error saving wish to sheets:', e);
+    }
 
-    // Construct WhatsApp message
-    const waMessage = `*Best Wishes for Chanaka & Avishka* ❤️\n\n*From:* ${name}\n\n*Message:*\n${message}`;
-    const encodedMessage = encodeURIComponent(waMessage);
-    const waUrl = `https://wa.me/94707819074?text=${encodedMessage}`;
-    
-    window.open(waUrl, '_blank');
     setSubmitted(true);
     setLoading(false);
   };

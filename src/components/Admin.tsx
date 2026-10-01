@@ -4,6 +4,7 @@ import { Copy, Check, ExternalLink, Sparkles, User, Calendar, Link as LinkIcon, 
 import { toast } from 'sonner';
 
 export const Admin: React.FC = () => {
+  const [eventType, setEventType] = useState('wedding');
   const [guestTitle, setGuestTitle] = useState('Mr.');
   const [guestName, setGuestName] = useState('');
   const [guestCount, setGuestCount] = useState('1');
@@ -30,8 +31,10 @@ export const Admin: React.FC = () => {
     const baseUrl = window.location.origin;
 
     // As per instruction: {baseURL}/{guestName} safely URL-encoded.
-    // We encode the display name so that the website can read it.
-    const fullUrl = `${baseUrl}/${encodeURIComponent(displayName)}`;
+    // If Waleema, it's {baseURL}/waleema/{guestName}
+    const fullUrl = eventType === 'waleema'
+      ? `${baseUrl}/waleema/${encodeURIComponent(displayName)}`
+      : `${baseUrl}/${encodeURIComponent(displayName)}`;
     setGeneratedUrl(fullUrl);
     setCopied(false);
     toast.success('Invitation link generated successfully!');
@@ -47,14 +50,14 @@ export const Admin: React.FC = () => {
     });
   };
 
-  const generateFullMessage = (url: string, title: string, name: string) => {
+  const generateFullMessage = (url: string, title: string, name: string, type: string) => {
     const displayName = getDisplayName(title, name);
-    // Important Dear Rule: always start with 'Dear {displayName} ❤️', since 'Dear' is removed from displayName if prefix was 'Dear'.
+    const eventName = type === 'waleema' ? 'Waleema' : 'wedding';
     return `Dear ${displayName} ❤️
 
 With joyful hearts, we warmly invite you to celebrate one of the most special days of our lives as we begin our journey together.
 
-Please view our wedding invitation and all the event details through the link below 🌐:
+Please view our ${eventName} invitation and all the event details through the link below 🌐:
 
 ${url}
 
@@ -65,7 +68,7 @@ With love,
   };
 
   const handleCopyMessageActive = () => {
-    const msg = generateFullMessage(generatedUrl, guestTitle, guestName);
+    const msg = generateFullMessage(generatedUrl, guestTitle, guestName, eventType);
     navigator.clipboard.writeText(msg).then(() => {
       toast.success('Full message copied to clipboard!');
     }).catch(() => {
@@ -119,8 +122,23 @@ With love,
             <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-rose via-brand-plum to-brand-rose" />
 
             <form onSubmit={handleGenerate} className="space-y-8">
-              {/* Guest Title & Name */}
+              {/* Event Type & Guest Name */}
               <div className="space-y-6">
+                <div>
+                  <label className="block text-xs uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 flex items-center gap-2 ml-1">
+                    <Calendar className="w-4 h-4 text-brand-plum" />
+                    Event Type
+                  </label>
+                  <select
+                    value={eventType}
+                    onChange={(e) => setEventType(e.target.value)}
+                    className="w-full bg-white px-6 py-4 rounded-full border border-stone-200/80 focus:ring-2 focus:ring-brand-lavender/30 focus:border-brand-plum/40 outline-none transition-all font-serif text-lg shadow-inner text-stone-800 cursor-pointer"
+                  >
+                    <option value="wedding">Wedding</option>
+                    <option value="waleema">Waleema</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="block text-xs uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 flex items-center gap-2 ml-1">
                     <User className="w-4 h-4 text-brand-plum" />
@@ -189,7 +207,7 @@ With love,
                     <Sparkles className="w-3 h-3" /> WhatsApp Message Preview
                   </p>
                   <div className="text-sm text-stone-700 font-serif whitespace-pre-wrap leading-relaxed bg-white/60 p-4 rounded-xl border border-stone-100">
-                    {generateFullMessage(generatedUrl, guestTitle, guestName)}
+                    {generateFullMessage(generatedUrl, guestTitle, guestName, eventType)}
                   </div>
                 </div>
 
