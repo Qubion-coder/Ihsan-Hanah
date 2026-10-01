@@ -60,7 +60,7 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           transition={{ duration: 1, delay: 0.4 }}
           className="flex flex-col items-center gap-1.5 mb-6 sm:mb-8 text-center px-4"
         >
-          <span className="text-[#4a3d36] text-xl sm:text-2xl mb-2 sm:mb-4">
+          <span className="text-[#4a3d36] text-xl sm:text-2xl mb-8 sm:mb-12">
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
           </span>
           <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2">
@@ -89,7 +89,7 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
-            className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-1 mb-2"
+            className="text-[#4a3d36] font-sans text-[10px] sm:text-[12px] tracking-[0.2em] uppercase mt-1 mb-2"
           >
             Son of Mr & Mrs. S. L. Subair
           </motion.span>
@@ -104,28 +104,23 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           </motion.span>
           
           <h1 className="text-[3.5rem] sm:text-[5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal mt-2">
-            {"Fathima Hanah".split("").map((char, i) => {
-              if (char === ' ') {
-                return <br key={i} />;
-              }
-              return (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.2 + i * 0.06, ease: "easeOut" }}
-                  className="inline-block"
-                >
-                  {char}
-                </motion.span>
-              );
-            })}
+            {"Fathima Hanah".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 + i * 0.06, ease: "easeOut" }}
+                className="inline-block"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </h1>
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.1 }}
-            className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-1"
+            className="text-[#4a3d36] font-sans text-[10px] sm:text-[12px] tracking-[0.2em] uppercase mt-1"
           >
             Daughter of Mr & Mrs. M. B. M. Muzammil
           </motion.span>
