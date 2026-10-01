@@ -32,7 +32,12 @@ export const LoveStory = () => {
         </span>
 
         <p className="text-[#5a4d46] font-sans font-light text-xs sm:text-sm leading-[2] sm:leading-[2.2] tracking-wide mt-4">
-          We met on a rainy Saturday afternoon at a cozy neighborhood coffee shop. There was only one seat left, so we awkwardly shared a table. What started as small talk about the weather turned into a three-hour conversation about travel dreams, favorite movies, and childhood stories. By the time the rain stopped, neither of us wanted the day to end.
+          Some stories begin exactly as we imagine,<br />
+          while others begin in the most unexpected ways.<br />
+          Ours was a journey of moments we never planned.<br />
+          Yet, every twist seemed to bring us closer together.<br />
+          Maybe some meetings are written long before they happen.<br />
+          Because what is meant to be will always find its way.
         </p>
 
       </motion.div>

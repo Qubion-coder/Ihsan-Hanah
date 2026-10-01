@@ -10,6 +10,15 @@ export const Admin: React.FC = () => {
   const [generatedUrl, setGeneratedUrl] = useState('');
   const [copied, setCopied] = useState(false);
 
+  const getDisplayName = (title: string, name: string) => {
+    const trimmedName = name.trim();
+    if (!trimmedName) return '';
+    if (title === 'Family') return `${trimmedName} and Family`;
+    if (title === 'Dear') return trimmedName;
+    if (title) return `${title} ${trimmedName}`;
+    return trimmedName;
+  };
+
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
     if (!guestName.trim()) {
@@ -17,14 +26,12 @@ export const Admin: React.FC = () => {
       return;
     }
 
-    // Build URL with params
+    const displayName = getDisplayName(guestTitle, guestName);
     const baseUrl = window.location.origin;
-    const params = new URLSearchParams();
-    if (guestTitle) params.append('title', guestTitle);
-    params.append('name', guestName.trim());
-    if (guestCount) params.append('guests', guestCount);
 
-    const fullUrl = `${baseUrl}/?${params.toString()}`;
+    // As per instruction: {baseURL}/{guestName} safely URL-encoded.
+    // We encode the display name so that the website can read it.
+    const fullUrl = `${baseUrl}/${encodeURIComponent(displayName)}`;
     setGeneratedUrl(fullUrl);
     setCopied(false);
     toast.success('Invitation link generated successfully!');
@@ -33,7 +40,7 @@ export const Admin: React.FC = () => {
   const handleCopy = (url: string) => {
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
-      toast.success('Link copied to clipboard!');
+      toast.success('Link copied!');
       setTimeout(() => setCopied(false), 3000);
     }).catch(() => {
       toast.error('Failed to copy link. Please select and copy manually.');
@@ -41,7 +48,9 @@ export const Admin: React.FC = () => {
   };
 
   const generateFullMessage = (url: string, title: string, name: string) => {
-    return `Dear ${title ? title + ' ' : ''}${name} ❤️
+    const displayName = getDisplayName(title, name);
+    // Important Dear Rule: always start with 'Dear {displayName} ❤️', since 'Dear' is removed from displayName if prefix was 'Dear'.
+    return `Dear ${displayName} ❤️
 
 With joyful hearts, we warmly invite you to celebrate one of the most special days of our lives as we begin our journey together.
 
@@ -52,7 +61,7 @@ ${url}
 Your presence would truly mean the world to us, and we would be honored to celebrate this beautiful moment together.
 
 With love,
-❤️ Chanaka & Avishka`;
+❤️ Ihsan & Fathima Hanah`;
   };
 
   const handleCopyMessageActive = () => {
@@ -72,8 +81,8 @@ With love,
       <div className="max-w-4xl mx-auto">
         {/* Back to main website button */}
         <div className="mb-8 flex justify-between items-center">
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 border border-brand-lavender/40 text-stone-600 hover:text-brand-plum hover:bg-white transition-all shadow-sm font-medium text-sm group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -101,7 +110,7 @@ With love,
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Generator Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -146,91 +155,74 @@ With love,
                     className="w-full bg-white px-6 py-4 rounded-full border border-stone-200/80 focus:ring-2 focus:ring-brand-lavender/30 focus:border-brand-plum/40 outline-none transition-all font-serif italic text-lg shadow-inner text-stone-800 placeholder:text-stone-400"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-xs uppercase tracking-[0.2em] font-bold text-stone-500 mb-3 flex items-center gap-2 ml-1">
-                    <User className="w-4 h-4 text-brand-plum" />
-                    Guest Count
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    required
-                    placeholder="Number of guests allowed"
-                    value={guestCount}
-                    onChange={(e) => setGuestCount(e.target.value)}
-                    className="w-full bg-white px-6 py-4 rounded-full border border-stone-200/80 focus:ring-2 focus:ring-brand-lavender/30 focus:border-brand-plum/40 outline-none transition-all font-serif text-lg shadow-inner text-stone-800 placeholder:text-stone-400"
-                  />
-                </div>
               </div>
-
 
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-stone-800 text-brand-rose py-5 rounded-full font-sans tracking-[0.3em] font-bold text-xs uppercase hover:bg-stone-900 transition-all shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.25)] active:scale-[0.98] flex items-center justify-center gap-3"
-              >
-                <LinkIcon className="w-4 h-4 text-brand-plum" />
-                Generate Invitation Link
-              </button>
-            </form>
-          </motion.div>
+              className="w-full bg-stone-800 text-brand-rose py-5 rounded-full font-sans tracking-[0.3em] font-bold text-xs uppercase hover:bg-stone-900 transition-all shadow-[0_10px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_15px_30px_rgba(0,0,0,0.25)] active:scale-[0.98] flex items-center justify-center gap-3"
+            >
+              <LinkIcon className="w-4 h-4 text-brand-plum" />
+              Generate Invitation Link
+            </button>
+          </form>
+        </motion.div>
 
-          {/* Generated Link & History */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-5 space-y-8"
-          >
-            {/* Active Generated Link Box */}
-            <div className="bg-white/80 backdrop-blur-2xl p-8 rounded-[2.5rem] border border-white shadow-[0_20px_50px_rgba(176,137,104,0.15)] relative overflow-hidden">
-              <h3 className="font-serif text-2xl text-stone-800 mb-4 flex items-center gap-2">
-                <LinkIcon className="w-5 h-5 text-brand-plum" />
-                Generated Link
-              </h3>
-              
-              {generatedUrl ? (
-                <div className="space-y-6 animate-fadeIn">
-                  <div className="p-5 bg-stone-50 rounded-2xl border border-stone-200/80 shadow-inner">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-brand-plum mb-3 flex items-center gap-2">
-                      <Sparkles className="w-3 h-3" /> WhatsApp Message Preview
-                    </p>
-                    <div className="text-sm text-stone-700 font-serif whitespace-pre-wrap leading-relaxed bg-white/60 p-4 rounded-xl border border-stone-100">
-                      {generateFullMessage(generatedUrl, guestTitle, guestName)}
-                    </div>
-                  </div>
+        {/* Generated Link & History */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="lg:col-span-5 space-y-8"
+        >
+          {/* Active Generated Link Box */}
+          <div className="bg-white/80 backdrop-blur-2xl p-8 rounded-[2.5rem] border border-white shadow-[0_20px_50px_rgba(176,137,104,0.15)] relative overflow-hidden">
+            <h3 className="font-serif text-2xl text-stone-800 mb-4 flex items-center gap-2">
+              <LinkIcon className="w-5 h-5 text-brand-plum" />
+              Generated Link
+            </h3>
 
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      onClick={() => handleCopy(generatedUrl)}
-                      className="flex-1 bg-brand-plum text-white py-3.5 px-6 rounded-full font-sans tracking-[0.2em] font-bold text-[11px] uppercase hover:bg-brand-plum/90 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95"
-                    >
-                      {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                      {copied ? 'Copied!' : 'Copy Link Only'}
-                    </button>
-                    <button
-                      onClick={handleCopyMessageActive}
-                      className="flex-1 bg-brand-rose text-brand-plum py-3.5 px-6 rounded-full font-sans tracking-[0.2em] font-bold text-[11px] uppercase hover:bg-brand-rose/90 transition-all shadow-sm border border-brand-lavender/30 flex items-center justify-center gap-2 active:scale-95"
-                    >
-                      <Copy className="w-4 h-4" />
-                      Copy Full Message
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-12 border-2 border-dashed border-stone-200 rounded-2xl">
-                  <p className="text-stone-400 font-serif italic text-base">
-                    Fill the form and click generate to create a link.
+            {generatedUrl ? (
+              <div className="space-y-6 animate-fadeIn">
+                <div className="p-5 bg-stone-50 rounded-2xl border border-stone-200/80 shadow-inner">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-brand-plum mb-3 flex items-center gap-2">
+                    <Sparkles className="w-3 h-3" /> WhatsApp Message Preview
                   </p>
+                  <div className="text-sm text-stone-700 font-serif whitespace-pre-wrap leading-relaxed bg-white/60 p-4 rounded-xl border border-stone-100">
+                    {generateFullMessage(generatedUrl, guestTitle, guestName)}
+                  </div>
                 </div>
-              )}
-            </div>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => handleCopy(generatedUrl)}
+                    className="flex-1 bg-brand-plum text-white py-3.5 px-6 rounded-full font-sans tracking-[0.2em] font-bold text-[11px] uppercase hover:bg-brand-plum/90 transition-all shadow-md flex items-center justify-center gap-2 active:scale-95"
+                  >
+                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    {copied ? 'Copied!' : 'Copy Link Only'}
+                  </button>
+                  <button
+                    onClick={handleCopyMessageActive}
+                    className="flex-1 bg-brand-rose text-brand-plum py-3.5 px-6 rounded-full font-sans tracking-[0.2em] font-bold text-[11px] uppercase hover:bg-brand-rose/90 transition-all shadow-sm border border-brand-lavender/30 flex items-center justify-center gap-2 active:scale-95"
+                  >
+                    <Copy className="w-4 h-4" />
+                    Copy Full Message
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-12 border-2 border-dashed border-stone-200 rounded-2xl">
+                <p className="text-stone-400 font-serif italic text-base">
+                  Fill the form and click generate to create a link.
+                </p>
+              </div>
+            )}
+          </div>
 
 
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </div>
+    </div >
   );
 };

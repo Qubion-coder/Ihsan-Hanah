@@ -58,59 +58,100 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="flex flex-col items-center gap-1.5 mb-10 sm:mb-12 text-center"
+          className="flex flex-col items-center gap-1.5 mb-6 sm:mb-8 text-center px-4"
         >
-          {inviteeName && (
-            <span className="text-[#4a3d36] font-serif italic text-lg sm:text-xl mb-4">
-              Dear {inviteeName},
+          <span className="text-[#4a3d36] text-xl sm:text-2xl mb-2 sm:mb-4">
+            بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
+          </span>
+          {inviteeName ? (
+            <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-medium uppercase leading-relaxed max-w-lg mt-2">
+              We cordially invite {inviteeName} to celebrate our special day with us.
             </span>
+          ) : (
+            <>
+              <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2">
+                Joyfully invite you
+              </span>
+              <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
+                to their wedding
+              </span>
+            </>
           )}
-          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
-            Joyfully invite you
-          </span>
-          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
-            to their wedding
-          </span>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="flex flex-col items-center gap-2 sm:gap-4 text-center"
-        >
-          <h1 className="text-[4.5rem] sm:text-[6.5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal">
-            Ihsan
+        <div className="flex flex-col items-center gap-1.5 sm:gap-2 text-center">
+          <h1 className="text-[3.5rem] sm:text-[5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal">
+            {"Ihsan".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 + i * 0.1, ease: "easeOut" }}
+                className="inline-block"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </h1>
-          <span className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-2 mb-4">
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.1 }}
+            className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-1 mb-2"
+          >
             Son of Mr & Mrs. S. L. Subair
-          </span>
+          </motion.span>
           
-          <span className="text-3xl sm:text-5xl font-display text-[#3a2d27] drop-shadow-sm my-2 font-normal">
+          <motion.span 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 1.2 }}
+            className="text-2xl sm:text-4xl font-display text-[#3a2d27] drop-shadow-sm my-1 font-normal"
+          >
             &
-          </span>
+          </motion.span>
           
-          <h1 className="text-[4.5rem] sm:text-[6.5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal mt-4">
-            Fathima Hanah
+          <h1 className="text-[3.5rem] sm:text-[5rem] font-display text-[#3a2d27] drop-shadow-sm leading-[0.8] font-normal mt-2">
+            {"Fathima Hanah".split("").map((char, i) => {
+              if (char === ' ') {
+                return <br key={i} />;
+              }
+              return (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.2 + i * 0.06, ease: "easeOut" }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
           </h1>
-          <span className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-2">
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 2.1 }}
+            className="text-[#4a3d36] font-sans text-[8px] sm:text-[10px] tracking-[0.2em] uppercase mt-1"
+          >
             Daughter of Mr & Mrs. M. B. M. Muzammil
-          </span>
-        </motion.div>
+          </motion.span>
+        </div>
 
       </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 1 }}
+        transition={{ delay: 2.5, duration: 1 }}
         className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 z-30"
       >
         <button 
           onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
           className="bg-gradient-to-r from-[#fceef0]/90 via-[#ffffff]/90 to-[#fceef0]/90 backdrop-blur-md border border-[#C5A059]/30 px-10 sm:px-12 py-3.5 sm:py-4 rounded-full hover:bg-white transition-all text-[#3a3a3a] font-sans text-[10px] sm:text-[11px] tracking-[0.4em] font-bold uppercase shadow-[0_4px_15px_rgba(0,0,0,0.05)] active:scale-95"
         >
-          Discover
+          SCROLL
         </button>
       </motion.div>
 

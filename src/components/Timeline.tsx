@@ -61,10 +61,10 @@ export const Timeline = () => {
           return (
             <motion.div 
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: isLeft ? -80 : 80, y: 20 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: idx * 0.1 }}
+              transition={{ duration: 0.8, delay: idx * 0.1, ease: "easeOut" }}
               className="flex w-full h-[180px] sm:h-[220px] relative"
             >
               {/* Left Column */}

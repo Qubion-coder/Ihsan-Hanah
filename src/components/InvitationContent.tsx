@@ -3,7 +3,7 @@ import { Music, VolumeX, Heart } from 'lucide-react';
 import { Hero } from './Hero';
 import { CountdownAndVenue } from './CountdownAndVenue';
 import { LoveStory } from './LoveStory';
-import { Timeline } from './Timeline';
+
 
 import { RSVPForm } from './RSVPForm';
 import { BestWishes } from './BestWishes';
@@ -75,9 +75,7 @@ export function InvitationContent({
         <LoveStory />
       </DeferredMount>
 
-      <DeferredMount active={active} delay={300} minHeight="40vh">
-        <Timeline />
-      </DeferredMount>
+
 
       <DeferredMount active={active} delay={420} minHeight="30vh">
         <RSVPForm inviteeName={fullInviteeName} eventName={eventLabel} eventParam={eventParam} />

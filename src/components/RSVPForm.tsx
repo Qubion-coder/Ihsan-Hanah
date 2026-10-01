@@ -80,7 +80,7 @@ export const RSVPForm: React.FC<RSVPFormProps> = ({ inviteeName = '', eventName 
         </h2>
 
         <span className="text-[#5a4d46] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] font-medium uppercase mt-8 mb-16 sm:mb-24 text-center">
-          Kindly respond by September 25, 2026
+          Kindly respond by October 08, 2026
         </span>
 
         <AnimatePresence mode="wait">

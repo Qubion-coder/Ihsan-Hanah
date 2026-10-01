@@ -20,7 +20,17 @@ export default function App() {
   const nameParam = params.get('name') || '';
   const eventParam = params.get('event') || 'both';
 
-  const fullInviteeName = `${titleParam} ${nameParam}`.trim();
+  let fullInviteeName = '';
+  const pathname = window.location.pathname;
+  if (pathname !== '/' && pathname !== '/admin') {
+    try {
+      fullInviteeName = decodeURIComponent(pathname.slice(1));
+    } catch (e) {
+      fullInviteeName = pathname.slice(1);
+    }
+  } else if (titleParam || nameParam) {
+    fullInviteeName = `${titleParam} ${nameParam}`.trim();
+  }
 
   let eventLabel = 'Our Wedding Celebration';
 
