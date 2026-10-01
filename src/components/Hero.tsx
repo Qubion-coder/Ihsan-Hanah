@@ -63,20 +63,12 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           <span className="text-[#4a3d36] text-xl sm:text-2xl mb-2 sm:mb-4">
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
           </span>
-          {inviteeName ? (
-            <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-medium uppercase leading-relaxed max-w-lg mt-2">
-              We cordially invite {inviteeName} to celebrate our special day with us.
-            </span>
-          ) : (
-            <>
-              <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2">
-                Joyfully invite you
-              </span>
-              <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
-                to their wedding
-              </span>
-            </>
-          )}
+          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2">
+            Joyfully invite you
+          </span>
+          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
+            to their wedding
+          </span>
         </motion.div>
 
         <div className="flex flex-col items-center gap-1.5 sm:gap-2 text-center">

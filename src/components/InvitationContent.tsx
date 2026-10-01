@@ -61,15 +61,17 @@ export function InvitationContent({
 
       <Hero event={eventParam} inviteeName={fullInviteeName} />
 
+      {fullInviteeName && (
+        <DeferredMount active={active} delay={80}>
+          <InviteeBanner inviteeName={fullInviteeName} eventLabel={eventLabel} />
+        </DeferredMount>
+      )}
+
       <DeferredMount active={active} delay={80} minHeight="60vh">
         <CountdownAndVenue targetDate={weddingDate} />
       </DeferredMount>
 
-      {fullInviteeName && (
-        <DeferredMount active={active} delay={120}>
-          <InviteeBanner inviteeName={fullInviteeName} eventLabel={eventLabel} />
-        </DeferredMount>
-      )}
+
 
       <DeferredMount active={active} delay={120} minHeight="40vh">
         <LoveStory />
