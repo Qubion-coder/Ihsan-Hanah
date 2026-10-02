@@ -63,7 +63,7 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           <span className="text-[#4a3d36] text-xl sm:text-2xl mb-8 sm:mb-12 relative -top-[1cm] sm:top-0">
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
           </span>
-          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2">
+          <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2 whitespace-nowrap">
             REQUEST THE PLEASURE OF YOUR COMPANY
           </span>
           <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
