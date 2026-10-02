@@ -60,14 +60,14 @@ export const Hero: React.FC<HeroProps> = ({ event = 'both', inviteeName }) => {
           transition={{ duration: 1, delay: 0.4 }}
           className="flex flex-col items-center gap-1.5 mb-6 sm:mb-8 text-center px-4"
         >
-          <span className="text-[#4a3d36] text-xl sm:text-2xl mb-8 sm:mb-12 relative top-[-2cm] sm:top-0">
+          <span className="text-[#4a3d36] text-xl sm:text-2xl mb-8 sm:mb-12 relative -top-[1cm] sm:top-0">
             بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ
           </span>
           <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase mt-2">
-            Joyfully invite you
+            REQUEST THE PLEASURE OF YOUR COMPANY
           </span>
           <span className="text-[#4a3d36] font-sans text-[10px] sm:text-[11px] tracking-[0.3em] sm:tracking-[0.35em] font-medium uppercase">
-            to their wedding
+            AT THEIR WEDDING
           </span>
         </motion.div>
 
